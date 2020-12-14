@@ -1,25 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import SignIn from './SignIn/SignIn';
+import Dashboard from './Dashboard/Dashboard'
+import {React, useState} from 'react';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+  const [token, setToken] = useState(null);
+  
+  const verify = localStorage.getItem('token');
+  console.log("verify:", verify)
+  if(verify !== null && verify != token) {
+    setToken(verify)
+    console.log('token no app', token)    
+  }
+  
+  if(token == null){
+    return <SignIn updateToken={setToken}></SignIn>
+  }
+  else{
+  return <Dashboard tokenp={token} updateToken={setToken}></Dashboard>
+  }
 }
 
 export default App;
